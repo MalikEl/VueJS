@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>  Login </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <div class="wrapper">
+    <div class="form-area">
+
+<form id="login" class="box">
+<h1> LOGIN! </h1>
+
+
+<label for="email">email: </label>
+<input required type="text" id="email" v-model='email'>
+<br><br>
+<label for="password">password: </label>
+<input required type="password" id="password" v-model='password'>
+<br><br>
+<button v-on:click='onSubmit'>submit</button>
+</form>
+
+<script>
+    var LoginApp = new Vue({
+        el: '#login',
+        data: {
+            email: '',
+            password: '',
+        },
+
+        methods: {
+            onSubmit: function () {
+            
+                var student = '';
+
+                var newEmail = this.email;
+                var newPass = this.password;
+
+                if (localStorage.getItem('student')) { 
+                    student = JSON.parse(localStorage.getItem('student'));
+
+                }
+
+                if (student) {
+                    if (student.some(function (student) {
+                        return student.email === newEmail & student.password === newPass
+
+                    })) {
+
+                        alert('Login Successful. Hello ' + newEmail);
+                      
+                    } else {
+                        alert('Please check your details');
+
+
+                    }
+                }
+            }
+
+        }
+
+    });
+</script>

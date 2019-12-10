@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tr</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<div class="wrapper">
+		<div class="form-area">
+		
+<form id="register" class="box">
+<h1> REGISTER! </h1>
+<label for="username"> Name </label>
+<input type="text" id="username" v-model="username">
+<label for="email"> Email: </label>
+<input input type="text" id="email" v-model='email'>
+<br><br>
+<label for="password">password: </label>
+<input required type="password" id="password" v-model='password'>
+<br><br>
+<label for="usertype"> User Type </label>
+<select name="usertype" id="usertype" v-model="usertype">
+<option value="Student">Student</option>
+<option value="Parent">Parent</option>
+</select>
+<br><br>
+
+
+<button v-on:click='onSubmit'>submit</button>
+</form>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+	new Vue({
+		el: '#register',
+		data: {
+			email: '',
+			password: '',
+			username: '',
+			usertype:'',
+		},
+		methods: {
+			onSubmit: function (){
+
+			}
+		},
+		methods:{
+			onSubmit: function () {
+				var student = '';
+				var newEmail = this.email;
+				if(localStorage.getItem('student')) {
+					student = JSON.parse(localStorage.getItem('student'));
+				}
+				;
+				if (student) {
+					if (student.some(function (student) {
+						return student.email === newEmail
+					})) {
+						alret('Email already exists!');
+						return;
+					}
+					student.push({'email': newEmail, 'password': this.password, 'username': this.username, 'usertype' :this.usertype});
+					localStorage.setItem('student', JSON.stringify(student));
+				} else {
+					student = [{'email': newEmail, 'password': this.password, 'username' : this.username, 'usertype' :this.usertype}];
+					localStorage.setItem('student', JSON.stringify(student));
+				}
+			}
+		}
+	})
+</script>
